@@ -19,7 +19,7 @@ export default {
 .navigate{
   display: flex;
   justify-content: space-between;
-  padding: 43px 0;
+  align-items: center;
 }
 
 
