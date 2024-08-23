@@ -1,0 +1,52 @@
+* {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.wrapper {
+    overflow: hidden;
+    min-height: 100%;
+    position: relative;
+}
+
+.x-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #afafaf;
+    border-radius: 10px;
+}
