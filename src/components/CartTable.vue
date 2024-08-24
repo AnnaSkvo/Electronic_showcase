@@ -25,8 +25,8 @@
                             <ButtonComponent @click="updateQuantity(item, 1)" text="+" />
                         </div>
                     </td>
-                    <td>{{ item.price }}$</td>
-                    <td>{{ item.price * item.quantity }}$</td>
+                    <td>{{ item.price.toFixed(2) }}$</td>
+                    <td>{{ (item.price * item.quantity).toFixed(2) }}$</td>
                 </tr>
             </tbody>
         </table>

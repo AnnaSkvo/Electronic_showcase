@@ -18,6 +18,18 @@
   </header>
   <main>
     <div class="filter">
+      <p class="filter__desc">Сортировка по</p>
+      <select class="filter__select" v-model="sortParameter">
+        <option value="name">Наименованию</option>
+        <option value="price">Цене</option>
+        <option value="rating">Рейтингу</option>
+      </select>
+
+      <p class="filter__desc">Порядок сортировки</p>
+      <select class="filter__select" v-model="sortOrder">
+        <option value="asc">По возрастанию</option>
+        <option value="desc">По убыванию</option>
+      </select>
 
       <p class="filter__desc">Категория</p>
       <select class="filter__select" v-model="filter.category">
@@ -27,6 +39,7 @@
       <p class="filter__desc">Цена</p>
       <input v-model="filter.price_min" type="number" class="filter__input" placeholder="От">
       <input v-model="filter.price_max" type="number" class="filter__input" placeholder="До">
+
       <ModalComponent :visible="modalVisible"
         message="Максимальная цена не может быть меньше минимальной. Фильтр не будет применен."
         @close="handleModalClose" />
@@ -37,7 +50,7 @@
     </div>
     <div class="product">
       <ul class="product__list">
-        <li class="product__card" v-for="item in products" :key="item.id">
+        <li class="product__card" v-for="item in sortedProducts" :key="item.id">
           <div class="product__container">
             <ProductCard>
 
@@ -90,6 +103,8 @@ export default {
   },
   data() {
     return {
+      sortParameter: 'name',
+      sortOrder: 'asc',
       filter: {
         category: 'all',
         price_min: '',
@@ -109,6 +124,24 @@ export default {
     // Получение товаров для каталога
     products() {
       return this.$store.state.products;
+    },
+    // Получение отсортированных товаров
+    sortedProducts() {
+      let sortedArray = this.products.sort((a, b) => {
+        let comparison = 0;
+
+        if (this.sortParameter === 'name') {
+          comparison = a.title.localeCompare(b.title);
+        } else if (this.sortParameter === 'price') {
+          comparison = a.price - b.price;
+        } else if (this.sortParameter === 'rating') {
+          comparison = b.rating.rate - a.rating.rate;
+        }
+
+        return this.sortOrder === 'asc' ? comparison : -comparison; // Изменяем порядок сортировки
+      });
+
+      return sortedArray;
     },
     // Получение общего количества товаров 
     totalCartItemCount() {
