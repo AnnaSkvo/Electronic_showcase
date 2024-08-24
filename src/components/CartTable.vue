@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th>№</th>
+                    <th>Изображение</th>
                     <th>Наименование</th>
                     <th>Количество</th>
                     <th>Цена за единицу</th>
@@ -13,11 +14,16 @@
             <tbody>
                 <tr v-for="(item, index) in this.$store.state.cart" :key="item.id">
                     <td>{{ index + 1 }}</td>
+                    <td>
+                        <img :src="item.image" :alt="item.title" class="image" />
+                    </td>
                     <td>{{ item.title }}</td>
-                    <td class="quantity">
-                        <ButtonComponent @click="updateQuantity(item, -1)" text="-" />
-                        <p class="quantity__count">{{ item.quantity }}</p>
-                        <ButtonComponent @click="updateQuantity(item, 1)" text="+" />
+                    <td>
+                        <div class="quantity">
+                            <ButtonComponent @click="updateQuantity(item, -1)" text="-" />
+                            <p class="quantity__count">{{ item.quantity }}</p>
+                            <ButtonComponent @click="updateQuantity(item, 1)" text="+" />
+                        </div>
                     </td>
                     <td>{{ item.price }}$</td>
                     <td>{{ item.price * item.quantity }}$</td>
@@ -64,10 +70,15 @@ th {
     background-color: #f2f2f2;
 }
 
-.quantity {
+.image {
+    width: 50px;
+    height: auto;
+}
+
+.quantity{
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-around;
 }
 
 .quantity__count {
