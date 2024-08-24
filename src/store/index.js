@@ -15,7 +15,7 @@ export default createStore({
     getCartItemCount: (state) => (itemId) => {
       const item = state.cart.find(cartItem => cartItem.id === itemId);
       return item ? item.quantity : 0;
-  }
+    }
   },
   mutations: {
     SET_PRODUCTS(state, payload) {
@@ -25,9 +25,9 @@ export default createStore({
     ADD_TO_CART(state, item) {
       const existingItem = state.cart.find(cartItem => cartItem.id === item.id);
       if (existingItem) {
-        existingItem.quantity += 1; 
+        existingItem.quantity += 1;
       } else {
-        state.cart.push({ ...item, quantity: 1 }); 
+        state.cart.push({ ...item, quantity: 1 });
       }
     },
     // Удаление товара из корзины
@@ -35,11 +35,15 @@ export default createStore({
       const existingItem = state.cart.find(cartItem => cartItem.id === item.id);
       if (existingItem) {
         if (existingItem.quantity > 1) {
-          existingItem.quantity -= 1; 
+          existingItem.quantity -= 1;
         } else {
           state.cart = state.cart.filter(cartItem => cartItem.id !== item.id);
         }
       }
+    },
+    // Очищаем корзину
+    CLEAR_CART(state) {
+      state.cart = [];
     }
   },
   actions: {

@@ -19,7 +19,7 @@ export default {
     background: #5e5f5f;
     color: #fff;
     align-items: center;
-    padding: 10px 24px;
+    padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
 }

@@ -4,9 +4,9 @@
     </div>
     <div v-else>
         <div class="container">
-            <ButtonComponent @click="actionToCart('-')" text="-" />
+            <ButtonComponent @click="updateQuantity('-')" text="-" />
             <p class="container__count"> {{ itemCount }}</p>
-            <ButtonComponent @click="actionToCart('+')" text="+" />
+            <ButtonComponent @click="updateQuantity('+')" text="+" />
         </div>
     </div>
 </template>
@@ -39,7 +39,7 @@ export default {
             this.$store.commit('ADD_TO_CART', this.item);
         },
         // Действия + и -
-        actionToCart(action) {
+        updateQuantity(action) {
             if (action == '-') {
                 this.count--;
                 this.$store.commit('REMOVE_FROM_CART', this.item);

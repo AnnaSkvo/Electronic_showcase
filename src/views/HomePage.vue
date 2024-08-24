@@ -156,6 +156,15 @@ export default {
   height: 50px;
   color: #5e5f5f;
   position: relative;
+  cursor: pointer;
+}
+
+.headerline__cart:hover, .headerline__logo:hover {
+  filter: drop-shadow(2px 3px 5px black);
+}
+
+.headerline__cart:active, .headerline__logo:active {
+  filter: none;
 }
 
 .cart__count {
