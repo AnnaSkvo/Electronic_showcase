@@ -65,9 +65,9 @@ export default {
     }
   },
   methods: {
-    // Авторизация и переход на главную
+    // Фейковая авторизация и переход на главную
     getAuthorize() {
-      localStorage.setItem("token", this.email + this.password);
+      localStorage.setItem("token", '123Skvo!*');
       this.$router.replace({ name: "home" });
     }
   },
