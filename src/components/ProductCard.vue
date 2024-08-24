@@ -28,12 +28,20 @@ export default {
     padding: 24px 20px;
 }
 
-.card:hover{
+.card:hover {
     box-shadow: 0px 0px 20px #d1d1d1;
 }
 
 .card__img {
     width: 100%;
     height: 50%;
+}
+
+.card__description {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
 }
 </style>

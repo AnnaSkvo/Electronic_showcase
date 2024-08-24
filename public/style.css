@@ -6,7 +6,6 @@
     line-height: 22px;
     margin: 0;
     padding: 0;
-    cursor: default;
 }
 
 body {
@@ -36,6 +35,10 @@ a {
 button {
     border: none;
     background-color: transparent;
+}
+
+p, div {
+    cursor: default;
 }
 
 *::-webkit-scrollbar {

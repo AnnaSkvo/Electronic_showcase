@@ -9,6 +9,7 @@
           <div class="headerline__cart">
             <div class="cart" @click="$router.push({ name: 'cart' })">
               <IconComponent name="IconCart" />
+              <span v-if="totalCartItemCount != 0" class="cart__count">{{ totalCartItemCount }}</span>
             </div>
           </div>
         </template>
@@ -27,8 +28,8 @@
       <input v-model="filter.price_min" type="number" class="filter__input" placeholder="От">
       <input v-model="filter.price_max" type="number" class="filter__input" placeholder="До">
 
-      <button class="filter__btn" @click="resetFilter()">Сброс</button>
-      <button class="filter__btn" @click="applyFilter()">Применить</button>
+      <ButtonComponent class="filter__btn" @click="resetFilter()" text="Сброс" />
+      <ButtonComponent class="filter__btn" @click="applyFilter()" text="Применить" />
 
     </div>
     <div class="product">
@@ -43,15 +44,18 @@
 
               <template #description>
                 <h1 class="product__title" :title="item.title">{{ item.title }}</h1>
-                <div class="product__rating">
-                  <RatingComponent :rating="item.rating" />
+                <div class="product__options">
+                  <p class="product__price">{{ item.price }}$</p>
+                  <div class="product__rating">
+                    <RatingComponent :rating="item.rating" />
+                  </div>
                 </div>
-                <p class="product__price">{{ item.price }}$</p>
+
               </template>
 
-              <!-- <template #button>
+              <template #button>
                 <ButtonCartComponent :item="item" />
-              </template>-->
+              </template>
             </ProductCard>
           </div>
         </li>
@@ -66,6 +70,8 @@ import HeaderLine from '@/components/HeaderLine.vue'
 import IconComponent from '@/icons/IconComponent.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import RatingComponent from '@/components/RatingComponent.vue'
+import ButtonCartComponent from '@/components/ButtonCartComponent.vue'
+import ButtonComponent from '@/components/ButtonComponent.vue'
 
 export default {
   name: 'HomePage',
@@ -74,6 +80,8 @@ export default {
     IconComponent,
     ProductCard,
     RatingComponent,
+    ButtonCartComponent,
+    ButtonComponent
   },
   data() {
     return {
@@ -92,8 +100,13 @@ export default {
     };
   },
   computed: {
+    // Получение товаров для каталога
     products() {
       return this.$store.state.products;
+    },
+    // Получение общего количества товаров 
+    totalCartItemCount() {
+      return this.$store.getters.cartItemCount;
     }
   },
   methods: {
@@ -142,6 +155,20 @@ export default {
   width: 50px;
   height: 50px;
   color: #5e5f5f;
+  position: relative;
+}
+
+.cart__count {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  border-radius: 10px;
+  background: #5e5f5f;
+  padding: 3px;
+  color: white;
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
 }
 
 main {
@@ -184,17 +211,7 @@ main {
 }
 
 .filter__btn {
-  background: #5e5f5f;
-  color: #fff;
-  align-items: center;
-  padding: 10px 24px;
-  border-radius: 10px;
-  cursor: pointer;
   margin-bottom: 20px;
-}
-
-.filter__btn:hover {
-  background: gray;
 }
 
 .product {
@@ -229,7 +246,14 @@ main {
   max-height: 44px;
 }
 
+.product__options {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .product__rating {
   display: flex;
+  align-items: center;
 }
 </style>
