@@ -27,6 +27,9 @@
       <p class="filter__desc">Цена</p>
       <input v-model="filter.price_min" type="number" class="filter__input" placeholder="От">
       <input v-model="filter.price_max" type="number" class="filter__input" placeholder="До">
+      <ModalComponent :visible="modalVisible"
+        message="Максимальная цена не может быть меньше минимальной. Фильтр не будет применен."
+        @close="handleModalClose" />
 
       <ButtonComponent class="filter__btn" @click="resetFilter()" text="Сброс" />
       <ButtonComponent class="filter__btn" @click="applyFilter()" text="Применить" />
@@ -72,6 +75,7 @@ import ProductCard from '@/components/ProductCard.vue'
 import RatingComponent from '@/components/RatingComponent.vue'
 import ButtonCartComponent from '@/components/ButtonCartComponent.vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import ModalComponent from '@/components/ModalComponent.vue'
 
 export default {
   name: 'HomePage',
@@ -81,7 +85,8 @@ export default {
     ProductCard,
     RatingComponent,
     ButtonCartComponent,
-    ButtonComponent
+    ButtonComponent,
+    ModalComponent
   },
   data() {
     return {
@@ -96,7 +101,8 @@ export default {
         { value: 'jewelery', text: 'Украшения' },
         { value: 'electronics', text: 'Электроника' },
         { value: "women's clothing", text: "Женская одежда" }
-      ]
+      ],
+      modalVisible: false,
     };
   },
   computed: {
@@ -124,6 +130,12 @@ export default {
     },
     // Метод применения фильтра
     applyFilter() {
+      // Проверка, что максимальная цена не меньше минимальной
+      if (this.filter.price_max < this.filter.price_min) {
+        // Открываем модальное окно
+        this.modalVisible = true;
+        return;
+      }
       this.fetchProducts();
     },
     // Метод сброса фильтра
@@ -131,6 +143,10 @@ export default {
       this.filter = { ...this.filter, category: 'all', price_min: '', price_max: '' }
       this.fetchProducts();
     },
+    // Скрыть модальное окно
+    handleModalClose() {
+      this.modalVisible = false;
+    }
   },
   mounted() {
     this.getAuth();
@@ -159,11 +175,13 @@ export default {
   cursor: pointer;
 }
 
-.headerline__cart:hover, .headerline__logo:hover {
+.headerline__cart:hover,
+.headerline__logo:hover {
   filter: drop-shadow(2px 3px 5px black);
 }
 
-.headerline__cart:active, .headerline__logo:active {
+.headerline__cart:active,
+.headerline__logo:active {
   filter: none;
 }
 
