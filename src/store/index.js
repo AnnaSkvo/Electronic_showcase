@@ -60,12 +60,10 @@ export default createStore({
         if (price_max) {
           data = data.filter(item => item.price < price_max);
         }
-        commit('SET_PRODUCTS', data)
+        commit('SET_PRODUCTS', data);
       } catch (e) {
         console.error(e);
       }
     },
-
-
   },
 })

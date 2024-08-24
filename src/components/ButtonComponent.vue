@@ -1,5 +1,5 @@
 <template>
-        <button class="btn">{{ this.text }}</button>
+    <button class="btn">{{ this.text }}</button>
 </template>
 
 <script>
@@ -22,6 +22,7 @@ export default {
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
+    transition: background .2s;
 }
 
 .btn:hover {

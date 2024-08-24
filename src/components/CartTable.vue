@@ -75,7 +75,7 @@ th {
     height: auto;
 }
 
-.quantity{
+.quantity {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -84,5 +84,4 @@ th {
 .quantity__count {
     width: 50px;
 }
-
 </style>

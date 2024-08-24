@@ -26,6 +26,7 @@ export default {
     box-shadow: 0px 0px 20px #f1f1f1;
     border-radius: 10px;
     padding: 24px 20px;
+    transition: box-shadow .2s;
 }
 
 .card:hover {

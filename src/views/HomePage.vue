@@ -1,20 +1,6 @@
 <template>
   <header>
-    <div class="headerline">
-      <HeaderLine>
-        <template #navigate>
-          <div class="headerline__logo" @click="$router.push({ name: 'home' })">
-            <IconComponent name="IconLogo" />
-          </div>
-          <div class="headerline__cart">
-            <div class="cart" @click="$router.push({ name: 'cart' })">
-              <IconComponent name="IconCart" />
-              <span v-if="totalCartItemCount != 0" class="cart__count">{{ totalCartItemCount }}</span>
-            </div>
-          </div>
-        </template>
-      </HeaderLine>
-    </div>
+    <HeaderLine />
   </header>
   <main>
     <div class="filter">
@@ -53,11 +39,9 @@
         <li class="product__card" v-for="item in sortedProducts" :key="item.id">
           <div class="product__container">
             <ProductCard>
-
               <template #img>
                 <img :src="item.image" :alt="item.title" class="product__img">
               </template>
-
               <template #description>
                 <h1 class="product__title" :title="item.title">{{ item.title }}</h1>
                 <div class="product__options">
@@ -66,9 +50,7 @@
                     <RatingComponent :rating="item.rating" />
                   </div>
                 </div>
-
               </template>
-
               <template #button>
                 <ButtonCartComponent :item="item" />
               </template>
@@ -140,13 +122,8 @@ export default {
 
         return this.sortOrder === 'asc' ? comparison : -comparison; // Изменяем порядок сортировки
       });
-
       return sortedArray;
     },
-    // Получение общего количества товаров 
-    totalCartItemCount() {
-      return this.$store.getters.cartItemCount;
-    }
   },
   methods: {
     //Фейковая проверка, что пользователь авторизован
@@ -188,49 +165,6 @@ export default {
 </script>
 
 <style scoped>
-.headerline {
-  background-color: #FAFAFA;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.headerline__logo {
-  width: 100px;
-  height: 100px;
-  color: #5e5f5f;
-  cursor: pointer;
-}
-
-.headerline__cart {
-  width: 50px;
-  height: 50px;
-  color: #5e5f5f;
-  position: relative;
-  cursor: pointer;
-}
-
-.headerline__cart:hover,
-.headerline__logo:hover {
-  filter: drop-shadow(2px 3px 5px black);
-}
-
-.headerline__cart:active,
-.headerline__logo:active {
-  filter: none;
-}
-
-.cart__count {
-  position: absolute;
-  top: 0;
-  right: 0px;
-  border-radius: 10px;
-  background: #5e5f5f;
-  padding: 3px;
-  color: white;
-  width: 22px;
-  height: 22px;
-  font-size: 12px;
-}
-
 main {
   display: flex;
   justify-content: flex-start;

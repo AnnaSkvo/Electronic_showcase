@@ -54,8 +54,8 @@ export default {
 }
 
 .modal__text {
-  font-size: 18px;
-  font-weight: 700;
-  padding: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 20px;
 }
 </style>
