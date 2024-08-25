@@ -3,72 +3,73 @@
     <HeaderLine />
   </header>
   <main>
-    <div class="filter">
+    <div class="x-container">
+      <div class="filter">
 
-      <p class="filter__desc">Сортировка по</p>
-      <div class="filter__sort">
-        <select class="filter__select-light" v-model="sortParameter">
-          <option value="name">Наименованию</option>
-          <option value="price">Цене</option>
-          <option value="rating">Рейтингу</option>
+        <p class="filter__desc">Сортировка по</p>
+        <div class="filter__sort">
+          <select class="filter__select-light" v-model="sortParameter">
+            <option value="name">Наименованию</option>
+            <option value="price">Цене</option>
+            <option value="rating">Рейтингу</option>
+          </select>
+
+          <select class="filter__select-light" v-model="sortOrder">
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+          </select>
+        </div>
+
+        <hr>
+
+        <h1 class="filter__title">Фильтр:</h1>
+        <p class="filter__desc">Категория</p>
+        <select class="filter__select" v-model="filter.category">
+          <option v-for="option in categoryOptions" :key="option.value" :value="option.value">{{ option.text }}</option>
         </select>
 
-        <select class="filter__select-light" v-model="sortOrder">
-          <option value="asc">По возрастанию</option>
-          <option value="desc">По убыванию</option>
-        </select>
+        <p class="filter__desc">Цена</p>
+        <input v-model="filter.price_min" type="number" class="filter__input" placeholder="От">
+        <input v-model="filter.price_max" type="number" class="filter__input" placeholder="До">
+
+        <ButtonComponent class="filter__btn" @click="resetFilter()" text="Сброс" />
+        <ButtonComponent class="filter__btn" @click="applyFilter()" text="Применить" />
+
+      </div>
+      <div class="product">
+        <ul class="product__list">
+          <li class="product__card" v-for="item in sortedProducts" :key="item.id">
+            <div class="product__container">
+              <ProductCard>
+                <template #img>
+                  <img :src="item.image" :alt="item.title" class="product__img" @click="openImg(item.image)">
+                </template>
+                <template #description>
+                  <h1 class="product__title" :title="item.title">{{ item.title }}</h1>
+                  <div class="product__options">
+                    <p class="product__price">{{ item.price.toFixed(2) }}$</p>
+                    <div class="product__rating">
+                      <RatingComponent :rating="item.rating" />
+                    </div>
+                  </div>
+                </template>
+                <template #button>
+                  <ButtonCartComponent :item="item" />
+                </template>
+              </ProductCard>
+            </div>
+          </li>
+        </ul>
       </div>
 
-      <hr>
+      <!-- Модальное окно вывода ошибки при фильтрации -->
+      <ModalComponent :visible="modalVisible"
+        message="Максимальная цена не может быть меньше минимальной. Фильтр не будет применен."
+        @close="handleModalClose" />
 
-      <h1 class="filter__title">Фильтр:</h1>
-      <p class="filter__desc">Категория</p>
-      <select class="filter__select" v-model="filter.category">
-        <option v-for="option in categoryOptions" :key="option.value" :value="option.value">{{ option.text }}</option>
-      </select>
-
-      <p class="filter__desc">Цена</p>
-      <input v-model="filter.price_min" type="number" class="filter__input" placeholder="От">
-      <input v-model="filter.price_max" type="number" class="filter__input" placeholder="До">
-
-      <ButtonComponent class="filter__btn" @click="resetFilter()" text="Сброс" />
-      <ButtonComponent class="filter__btn" @click="applyFilter()" text="Применить" />
-
+      <!-- Модальное окно изображения на весь экран -->
+      <ModalImg v-if="selectedImage" :selectedImage="this.selectedImage" @closeImg="closeImg" />
     </div>
-    <div class="product">
-      <ul class="product__list">
-        <li class="product__card" v-for="item in sortedProducts" :key="item.id">
-          <div class="product__container">
-            <ProductCard>
-              <template #img>
-                <img :src="item.image" :alt="item.title" class="product__img" @click="openImg(item.image)">
-              </template>
-              <template #description>
-                <h1 class="product__title" :title="item.title">{{ item.title }}</h1>
-                <div class="product__options">
-                  <p class="product__price">{{ item.price.toFixed(2) }}$</p>
-                  <div class="product__rating">
-                    <RatingComponent :rating="item.rating" />
-                  </div>
-                </div>
-              </template>
-              <template #button>
-                <ButtonCartComponent :item="item" />
-              </template>
-            </ProductCard>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Модальное окно вывода ошибки при фильтрации -->
-    <ModalComponent :visible="modalVisible"
-      message="Максимальная цена не может быть меньше минимальной. Фильтр не будет применен."
-      @close="handleModalClose" />
-
-    <!-- Модальное окно изображения на весь экран -->
-    <ModalImg v-if="selectedImage" :selectedImage="this.selectedImage" @closeImg="closeImg" />
-
   </main>
 </template>
 
@@ -187,14 +188,18 @@ export default {
 
 <style scoped>
 main {
+  overflow-y: auto;
+}
+
+.x-container {
   display: flex;
   justify-content: flex-start;
   height: calc(100vh - 100px);
-  margin-left: 18%;
+  min-width: 500px;
 }
 
 .filter {
-  width: 20%;
+  width: 26%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -209,7 +214,7 @@ main {
   font-size: 18px;
   font-weight: 700;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .filter__desc {
@@ -235,7 +240,7 @@ main {
 .filter__select-light {
   border: none;
   padding: 0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .filter__select-light:focus {
@@ -256,7 +261,6 @@ main {
 
 .product {
   width: 80%;
-  overflow-y: auto;
 }
 
 .product__list {
@@ -296,5 +300,44 @@ main {
 .product__rating {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 1600px) {
+  .x-container {
+    justify-content: space-between;
+  }
+
+  .filter {
+    width: 30%;
+  }
+
+  .filter__sort {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .product {
+    width: 70%;
+  }
+
+  .product__list {
+    grid-template-columns: repeat(auto-fill, 230px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .filter {
+    margin-left: 10px;
+  }
+
+  .product {
+    width: 60%;
+  }
+}
+
+@media (max-height: 620px) {
+  .filter {
+    justify-content: start;
+  }
 }
 </style>
