@@ -9,14 +9,14 @@
         <input v-model="email" type="email" @blur="isEmailTouched = true" :class="{ error: isEmailError }"
           class="auth__input">
         <div class="auth__err" v-if="isEmailError">
-          Заполено некорректно
+          Заполнено некорректно
         </div>
       </div>
       <div class="auth__field">
         <p>Пароль</p>
         <input type="password" v-model="password" @blur="isPasswordTouched = true" class="auth__input" />
         <div class="auth__err" v-if="isPasswordError">
-          Заполено некорректно
+          Заполнено некорректно
         </div>
       </div>
       <button :disabled="!isEmailValid || !isPasswordValid" class="auth__btn" type="submit">Войти</button>
