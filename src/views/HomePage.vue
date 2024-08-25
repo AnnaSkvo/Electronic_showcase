@@ -131,7 +131,7 @@ export default {
         } else if (this.sortParameter === 'price') {
           comparison = a.price - b.price;
         } else if (this.sortParameter === 'rating') {
-          comparison = b.rating.rate - a.rating.rate;
+          comparison = a.rating.rate - b.rating.rate;
         }
 
         return this.sortOrder === 'asc' ? comparison : -comparison; // Изменяем порядок сортировки
