@@ -71,8 +71,8 @@ th {
 }
 
 .image {
-    width: 50px;
-    height: auto;
+    width: auto;
+    height: 60px;
 }
 
 .quantity {
