@@ -46,4 +46,18 @@ export default {
     justify-content: space-evenly;
     text-align: left;
 }
+
+@media (max-width: 1400px) {
+    .card {
+        width: 120px;
+        height: 260px;
+    }
+}
+
+@media (max-width: 410px) {
+    .card {
+        width: 80px;
+        height: 150px;
+    }
+}
 </style>

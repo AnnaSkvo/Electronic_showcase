@@ -1,6 +1,6 @@
 <template>
     <div v-if="itemCount == 0">
-        <ButtonComponent @click="addToCart()" text="Добавить в корзину" />
+        <ButtonComponent @click="addToCart()" text="В корзину" />
     </div>
     <div v-else>
         <div class="container">

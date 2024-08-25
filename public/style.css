@@ -20,7 +20,7 @@ body {
 }
 
 .x-container {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -53,4 +53,10 @@ p, h1 {
 *::-webkit-scrollbar-thumb {
     background-color: #afafaf;
     border-radius: 10px;
+}
+
+@media (max-width: 410px) {
+    * {
+        font-size: 10px;
+    }
 }

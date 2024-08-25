@@ -28,4 +28,10 @@ export default {
 .btn:hover {
     background: gray;
 }
+
+@media (max-width: 410px) {
+    .btn {
+        padding: 4px 8px;
+    }
+}
 </style>
