@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import CartPage from '../views/CartPage.vue'
 import AuthPage from '../views/AuthPage.vue'
+import notFound from '../views/notFound.vue'
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: CartPage
+  },
+  {
+    path: '/:pathMatch(.*)',
+    component: notFound
   }
 ]
 
